@@ -1,5 +1,6 @@
 package servlets;
 
+import com.google.gson.Gson;
 import services.UserService;
 import models.User;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import viewmodels.UserViewModel;
 
 public class UserServlet extends HttpServlet {
 
@@ -18,12 +20,27 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        
+
+        
         UserService us = new UserService();
         String action = request.getParameter("action");
         if (action != null && action.equals("view")) {
             String selectedUsername = request.getParameter("selectedUsername");
             try {
                 User user = us.get(selectedUsername);
+                boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+                if (ajax) {
+                    Gson gson = new Gson();
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    UserViewModel userVM = new UserViewModel(user);
+                    String str = gson.toJson(userVM);
+                    response.getWriter().write(str);
+                    return;
+                }
+                
                 request.setAttribute("selectedUser", user);
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);

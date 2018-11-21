@@ -5,6 +5,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage Users</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="js/users.js"></script>
         <link rel="stylesheet" href="<c:url value='styles/notes.css' />" />
     </head>
     <body>
@@ -52,29 +54,18 @@
                 </tr>
             </c:forEach>
         </table>
-        <c:if test="${selectedUser == null}">
-            <h3>Add User</h3>
-            <form action="users" method="POST">
-                username: <input type="text" name="username"><br>
-                password: <input type="password" name="password"><br>
-                first name: <input type="text" name="firstname"><br>
-                last name: <input type="text" name="lastname"><br>
-                email: <input type="email" name="email"><br>
-                <input type="hidden" name="action" value="add">
-                <input type="submit" value="Save">
-            </form>
-        </c:if>
-        <c:if test="${selectedUser != null}">
+
+
             <h3>Edit User</h3>
             <form action="users" method="POST">
-                username: <input type="text" name="username" value="${selectedUser.username}" readonly><br>
-                password: <input type="password" name="password" value="${selectedUser.password}"><br>
-                first name: <input type="text" name="firstname" value="${selectedUser.firstname}"><br>
-                last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
-                email: <input type="email" name="email" value="${selectedUser.email}"><br>
+                username: <input type="text" name="username" value="${selectedUser.username}" readonly id="username"><br>
+                password: <input type="password" name="password" value="${selectedUser.password}" id="password"><br>
+                first name: <input type="text" name="firstname" value="${selectedUser.firstname}" id="firstname"><br>
+                last name: <input type="text" name="lastname" value="${selectedUser.lastname}" id="lastname"><br>
+                email: <input type="email" name="email" value="${selectedUser.email}" id="email"><br>
                 <input type="hidden" name="action" value="edit">
                 <input type="submit" value="Save">
             </form>
-        </c:if>
+
     </body>
 </html>
