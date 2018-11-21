@@ -18,5 +18,8 @@
             password: <input type="password" required name="password"><br>
             <input type="submit" value="Submit">
         </form>
+        <p>
+            New user? Please <a href="register">register</a>
+        </p>
     </body>
 </html>
